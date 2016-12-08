@@ -15,8 +15,9 @@ namespace Image.Transform.Rotate.Services.Interfaces
         /// <summary>
         /// 旋轉影像。
         /// </summary>
+        /// <param name="sourceBitmap">要旋轉的影像。</param>
         /// <param name="degrees">旋轉角度，–360 至 360 度。</param>
         /// <returns>旋轉後的影像。</returns>
-        Bitmap RotateImage(double degrees);
+        Bitmap RotateImage(Bitmap sourceBitmap, double degrees);
     }
 }
