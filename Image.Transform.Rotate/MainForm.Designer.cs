@@ -95,6 +95,7 @@
             this.btnOpenOriginal.TabIndex = 1;
             this.btnOpenOriginal.Text = "開啟";
             this.btnOpenOriginal.UseVisualStyleBackColor = true;
+            this.btnOpenOriginal.Click += new System.EventHandler(this.btnOpenOriginal_Click);
             // 
             // btnSaveNewImage
             // 
