@@ -108,6 +108,7 @@
             this.btnSaveNewImage.TabIndex = 3;
             this.btnSaveNewImage.Text = "儲存";
             this.btnSaveNewImage.UseVisualStyleBackColor = true;
+            this.btnSaveNewImage.Click += new System.EventHandler(this.btnSaveNewImage_Click);
             // 
             // MainForm
             // 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -23,11 +24,9 @@ namespace Image.Transform.Rotate
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Title = "請選擇一張圖片。",
-                Filter = "PNG 圖片 (.png)|*.png|JPG 圖片 (.jpg)|*.jpg|BMP 圖片 (.bmp)|*.bmp",
+                Title = "開啟檔案",
+                Filter = "PNG (.png)|*.png|JPEG (*.jpg;*.jpeg;*.jpe;*.jfif)|*.jpg;*.jpeg;*.jpe;*.jfif|點陣圖檔案 (*.bmp;*.dib)|*.bmp;*.dib",
                 RestoreDirectory = true,
-                CheckPathExists = true,
-                CheckFileExists = true,
                 InitialDirectory =
                 Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
             };
@@ -66,6 +65,41 @@ namespace Image.Transform.Rotate
         private void numRotateDegrees_ValueChanged(object sender, EventArgs e)
         {
             picPreview.Image = this.ApplyFilter(picPreview.Image as Bitmap);
+        }
+
+        private void btnSaveNewImage_Click(object sender, EventArgs e)
+        {
+            if (picPreview.Image != null)
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Title = "儲存檔案",
+                    Filter = "PNG 圖片 (.png)|*.png|JPG 圖片 (.jpg)|*.jpg|BMP 圖片 (.bmp)|*.bmp",
+                    RestoreDirectory = true,
+                    InitialDirectory =
+                    Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
+                };
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    ImageFormat imgFormat = ImageFormat.Png;
+                    switch (saveFileDialog.FilterIndex)
+                    {
+                        case 2:
+                            imgFormat = ImageFormat.Jpeg;
+                            break;
+
+                        case 3:
+                            imgFormat = ImageFormat.Bmp;
+                            break;
+                    }
+
+                    using (Stream stream = saveFileDialog.OpenFile())
+                    {
+                        picPreview.Image.Save(stream, imgFormat);
+                    }
+                }
+            }
         }
     }
 }
