@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Image.Transform.Rotate.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -35,7 +36,12 @@ namespace Image.Transform.Rotate
             {
                 try
                 {
-                    picPreview.Image = new Bitmap(openFileDialog.FileName);
+                    Bitmap previewBitmap = new Bitmap(openFileDialog.FileName);
+                    if (numRotateDegrees.Value.Equals(0) == false)
+                    {
+                        previewBitmap = this.ApplyFilter(previewBitmap);
+                    }
+                    picPreview.Image = previewBitmap;
                 }
                 catch (Exception)
                 {
@@ -45,6 +51,21 @@ namespace Image.Transform.Rotate
                                     MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private Bitmap ApplyFilter(Bitmap originalBitmap)
+        {
+            if (originalBitmap == null)
+            {
+                return new Bitmap(picPreview.Width, picPreview.Height);
+            }
+            return new ImageTransformService()
+                .RotateImage(originalBitmap, (double)numRotateDegrees.Value);
+        }
+
+        private void numRotateDegrees_ValueChanged(object sender, EventArgs e)
+        {
+            picPreview.Image = this.ApplyFilter(picPreview.Image as Bitmap);
         }
     }
 }

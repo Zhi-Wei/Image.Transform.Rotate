@@ -84,6 +84,7 @@
             this.numRotateDegrees.Size = new System.Drawing.Size(167, 45);
             this.numRotateDegrees.TabIndex = 2;
             this.numRotateDegrees.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numRotateDegrees.ValueChanged += new System.EventHandler(this.numRotateDegrees_ValueChanged);
             // 
             // btnOpenOriginal
             // 
