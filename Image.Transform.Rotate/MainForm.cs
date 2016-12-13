@@ -1,13 +1,8 @@
 ﻿using Image.Transform.Rotate.Services;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,7 +15,7 @@ namespace Image.Transform.Rotate
             InitializeComponent();
         }
 
-        private void btnOpenOriginal_Click(object sender, EventArgs e)
+        private async void btnOpenOriginal_ClickAsync(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
@@ -35,10 +30,11 @@ namespace Image.Transform.Rotate
             {
                 try
                 {
-                    Bitmap previewBitmap = new Bitmap(openFileDialog.FileName);
+                    Bitmap previewBitmap = await Task.Factory.StartNew(() =>
+                                                      new Bitmap(openFileDialog.FileName));
                     if (numRotateDegrees.Value.Equals(0) == false)
                     {
-                        previewBitmap = this.ApplyFilter(previewBitmap);
+                        previewBitmap = await this.ApplyFilterAsync(previewBitmap);
                     }
                     picPreview.Image = previewBitmap;
                 }
@@ -52,22 +48,26 @@ namespace Image.Transform.Rotate
             }
         }
 
-        private Bitmap ApplyFilter(Bitmap originalBitmap)
+        private Task<Bitmap> ApplyFilterAsync(Bitmap originalBitmap)
         {
             if (originalBitmap == null)
             {
-                return new Bitmap(picPreview.Width, picPreview.Height);
+                return null;
             }
-            return new ImageTransformService()
-                .RotateImage(originalBitmap, (double)numRotateDegrees.Value);
+            return Task.Factory.StartNew(() =>
+                        new ImageTransformService()
+                            .RotateImage(originalBitmap, (double)numRotateDegrees.Value));
         }
 
-        private void numRotateDegrees_ValueChanged(object sender, EventArgs e)
+        private async void numRotateDegrees_ValueChangedAsync(object sender, EventArgs e)
         {
-            picPreview.Image = this.ApplyFilter(picPreview.Image as Bitmap);
+            if (picPreview.Image != null)
+            {
+                picPreview.Image = await this.ApplyFilterAsync(picPreview.Image as Bitmap);
+            }
         }
 
-        private void btnSaveNewImage_Click(object sender, EventArgs e)
+        private async void btnSaveNewImage_ClickAsync(object sender, EventArgs e)
         {
             if (picPreview.Image != null)
             {
@@ -82,24 +82,34 @@ namespace Image.Transform.Rotate
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    ImageFormat imgFormat = ImageFormat.Png;
-                    switch (saveFileDialog.FilterIndex)
-                    {
-                        case 2:
-                            imgFormat = ImageFormat.Jpeg;
-                            break;
-
-                        case 3:
-                            imgFormat = ImageFormat.Bmp;
-                            break;
-                    }
-
+                    ImageFormat imgFormat = GetImageFormat(saveFileDialog);
                     using (Stream stream = saveFileDialog.OpenFile())
                     {
-                        picPreview.Image.Save(stream, imgFormat);
+                        await Task.Factory.StartNew(() =>
+                                   picPreview.Image.Save(stream, imgFormat));
                     }
+                    MessageBox.Show("儲存成功。",
+                                    "訊息",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
                 }
             }
+        }
+
+        private static ImageFormat GetImageFormat(SaveFileDialog saveFileDialog)
+        {
+            ImageFormat imgFormat = ImageFormat.Png;
+            switch (saveFileDialog.FilterIndex)
+            {
+                case 2:
+                    imgFormat = ImageFormat.Jpeg;
+                    break;
+
+                case 3:
+                    imgFormat = ImageFormat.Bmp;
+                    break;
+            }
+            return imgFormat;
         }
     }
 }

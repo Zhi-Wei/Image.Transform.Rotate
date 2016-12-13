@@ -84,7 +84,7 @@
             this.numRotateDegrees.Size = new System.Drawing.Size(167, 45);
             this.numRotateDegrees.TabIndex = 2;
             this.numRotateDegrees.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numRotateDegrees.ValueChanged += new System.EventHandler(this.numRotateDegrees_ValueChanged);
+            this.numRotateDegrees.ValueChanged += new System.EventHandler(this.numRotateDegrees_ValueChangedAsync);
             // 
             // btnOpenOriginal
             // 
@@ -96,7 +96,7 @@
             this.btnOpenOriginal.TabIndex = 1;
             this.btnOpenOriginal.Text = "開啟";
             this.btnOpenOriginal.UseVisualStyleBackColor = true;
-            this.btnOpenOriginal.Click += new System.EventHandler(this.btnOpenOriginal_Click);
+            this.btnOpenOriginal.Click += new System.EventHandler(this.btnOpenOriginal_ClickAsync);
             // 
             // btnSaveNewImage
             // 
@@ -108,7 +108,7 @@
             this.btnSaveNewImage.TabIndex = 3;
             this.btnSaveNewImage.Text = "儲存";
             this.btnSaveNewImage.UseVisualStyleBackColor = true;
-            this.btnSaveNewImage.Click += new System.EventHandler(this.btnSaveNewImage_Click);
+            this.btnSaveNewImage.Click += new System.EventHandler(this.btnSaveNewImage_ClickAsync);
             // 
             // MainForm
             // 
