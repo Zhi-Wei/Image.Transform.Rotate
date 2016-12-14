@@ -76,32 +76,12 @@ namespace Image.Transform.Rotate.Services
                             if (resultXY + 6 < resultBuffer.Length)
                             {
                                 Array.Copy(pixelBuffer, sourceXY, resultBuffer, resultXY + 4, 3);
-
-                                //resultBuffer[resultXY + 4] =
-                                //    pixelBuffer[sourceXY];
-
-                                //resultBuffer[resultXY + 5] =
-                                //    pixelBuffer[sourceXY + 1];
-
-                                //resultBuffer[resultXY + 6] =
-                                //    pixelBuffer[sourceXY + 2];
-
                                 resultBuffer[resultXY + 7] = 255;
                             }
 
                             if (resultXY + 3 < resultBuffer.Length)
                             {
                                 Array.Copy(pixelBuffer, sourceXY, resultBuffer, resultXY, 3);
-
-                                //resultBuffer[resultXY] =
-                                //    pixelBuffer[sourceXY];
-
-                                //resultBuffer[resultXY + 1] =
-                                //    pixelBuffer[sourceXY + 1];
-
-                                //resultBuffer[resultXY + 2] =
-                                //    pixelBuffer[sourceXY + 2];
-
                                 resultBuffer[resultXY + 3] = 255;
                             }
                         }
