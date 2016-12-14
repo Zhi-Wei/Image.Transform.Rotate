@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.picPreview = new System.Windows.Forms.PictureBox();
             this.labelRotateDegrees = new System.Windows.Forms.Label();
             this.numRotateDegrees = new System.Windows.Forms.NumericUpDown();
             this.btnOpenOriginal = new System.Windows.Forms.Button();
             this.btnSaveNewImage = new System.Windows.Forms.Button();
+            this.toolTipRotateDegrees = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.picPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRotateDegrees)).BeginInit();
             this.SuspendLayout();
@@ -84,6 +86,7 @@
             this.numRotateDegrees.Size = new System.Drawing.Size(167, 45);
             this.numRotateDegrees.TabIndex = 2;
             this.numRotateDegrees.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.toolTipRotateDegrees.SetToolTip(this.numRotateDegrees, "請輸入 -360°～360° 的旋轉角度。");
             this.numRotateDegrees.ValueChanged += new System.EventHandler(this.numRotateDegrees_ValueChangedAsync);
             // 
             // btnOpenOriginal
@@ -136,6 +139,7 @@
         private System.Windows.Forms.NumericUpDown numRotateDegrees;
         private System.Windows.Forms.Button btnOpenOriginal;
         private System.Windows.Forms.Button btnSaveNewImage;
+        private System.Windows.Forms.ToolTip toolTipRotateDegrees;
     }
 }
 
