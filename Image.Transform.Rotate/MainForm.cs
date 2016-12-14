@@ -20,7 +20,7 @@ namespace Image.Transform.Rotate
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
                 Title = "開啟檔案",
-                Filter = "PNG (.png)|*.png|JPEG (*.jpg;*.jpeg;*.jpe;*.jfif)|*.jpg;*.jpeg;*.jpe;*.jfif|點陣圖檔案 (*.bmp;*.dib)|*.bmp;*.dib",
+                Filter = "所有圖片|*.png;*.jpg;*.jpeg;*.jpe;*.jfif;*.bmp;*.dib|PNG|*.png|JPEG|*.jpg;*.jpeg;*.jpe;*.jfif|點陣圖檔案|*.bmp;*.dib",
                 RestoreDirectory = true,
                 InitialDirectory =
                 Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
@@ -30,13 +30,9 @@ namespace Image.Transform.Rotate
             {
                 try
                 {
-                    Bitmap previewBitmap = await Task.Factory.StartNew(() =>
-                                                      new Bitmap(openFileDialog.FileName));
-                    if (numRotateDegrees.Value.Equals(0) == false)
-                    {
-                        previewBitmap = await this.ApplyFilterAsync(previewBitmap);
-                    }
-                    picPreview.Image = previewBitmap;
+                    picPreview.Image = await this.ApplyFilterAsync(
+                        await Task.Factory.StartNew(() =>
+                            new Bitmap(openFileDialog.FileName)));
                 }
                 catch (Exception)
                 {
@@ -50,20 +46,25 @@ namespace Image.Transform.Rotate
 
         private Task<Bitmap> ApplyFilterAsync(Bitmap originalBitmap)
         {
+            Func<Bitmap> func = () =>
+                        new ImageTransformService()
+                            .RotateImage(originalBitmap, (double)numRotateDegrees.Value);
             if (originalBitmap == null)
             {
-                return null;
+                func = () => null;
             }
-            return Task.Factory.StartNew(() =>
-                        new ImageTransformService()
-                            .RotateImage(originalBitmap, (double)numRotateDegrees.Value));
+            else if ((numRotateDegrees.Value % 360) == 0)
+            {
+                func = () => originalBitmap;
+            }
+            return Task.Factory.StartNew(func);
         }
 
         private async void numRotateDegrees_ValueChangedAsync(object sender, EventArgs e)
         {
             if (picPreview.Image != null)
             {
-                picPreview.Image = await this.ApplyFilterAsync(picPreview.Image as Bitmap);
+                picPreview.Image = await this.ApplyFilterAsync(new Bitmap(picPreview.Image));
             }
         }
 
@@ -74,7 +75,7 @@ namespace Image.Transform.Rotate
                 SaveFileDialog saveFileDialog = new SaveFileDialog
                 {
                     Title = "儲存檔案",
-                    Filter = "PNG 圖片 (.png)|*.png|JPG 圖片 (.jpg)|*.jpg|BMP 圖片 (.bmp)|*.bmp",
+                    Filter = "PNG 圖片|*.png|JPG 圖片|*.jpg|BMP 圖片|*.bmp",
                     RestoreDirectory = true,
                     InitialDirectory =
                     Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
