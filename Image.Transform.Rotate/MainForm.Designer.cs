@@ -29,31 +29,19 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.picPreview = new System.Windows.Forms.PictureBox();
             this.labelRotateDegrees = new System.Windows.Forms.Label();
             this.numRotateDegrees = new System.Windows.Forms.NumericUpDown();
             this.btnOpenOriginal = new System.Windows.Forms.Button();
             this.btnSaveNewImage = new System.Windows.Forms.Button();
             this.toolTipRotateDegrees = new System.Windows.Forms.ToolTip(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.picPreview)).BeginInit();
+            this.panelProgressRing = new System.Windows.Forms.Panel();
+            this.picProgressRing = new System.Windows.Forms.PictureBox();
+            this.picPreview = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.numRotateDegrees)).BeginInit();
+            this.panelProgressRing.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picProgressRing)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picPreview)).BeginInit();
             this.SuspendLayout();
-            // 
-            // picPreview
-            // 
-            this.picPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.picPreview.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.picPreview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.picPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picPreview.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.picPreview.Location = new System.Drawing.Point(10, 10);
-            this.picPreview.Name = "picPreview";
-            this.picPreview.Size = new System.Drawing.Size(800, 690);
-            this.picPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picPreview.TabIndex = 0;
-            this.picPreview.TabStop = false;
             // 
             // labelRotateDegrees
             // 
@@ -113,11 +101,49 @@
             this.btnSaveNewImage.UseVisualStyleBackColor = true;
             this.btnSaveNewImage.Click += new System.EventHandler(this.btnSaveNewImage_ClickAsync);
             // 
+            // panelProgressRing
+            // 
+            this.panelProgressRing.BackColor = System.Drawing.Color.Transparent;
+            this.panelProgressRing.Controls.Add(this.picProgressRing);
+            this.panelProgressRing.Location = new System.Drawing.Point(340, 285);
+            this.panelProgressRing.Name = "panelProgressRing";
+            this.panelProgressRing.Size = new System.Drawing.Size(120, 120);
+            this.panelProgressRing.TabIndex = 5;
+            // 
+            // picProgressRing
+            // 
+            this.picProgressRing.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picProgressRing.Image = global::Image.Transform.Rotate.Properties.Resources.Ripple;
+            this.picProgressRing.Location = new System.Drawing.Point(0, 0);
+            this.picProgressRing.Margin = new System.Windows.Forms.Padding(0);
+            this.picProgressRing.Name = "picProgressRing";
+            this.picProgressRing.Size = new System.Drawing.Size(120, 120);
+            this.picProgressRing.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picProgressRing.TabIndex = 0;
+            this.picProgressRing.TabStop = false;
+            // 
+            // picPreview
+            // 
+            this.picPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.picPreview.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.picPreview.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.picPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picPreview.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.picPreview.Location = new System.Drawing.Point(10, 10);
+            this.picPreview.Name = "picPreview";
+            this.picPreview.Size = new System.Drawing.Size(800, 690);
+            this.picPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picPreview.TabIndex = 0;
+            this.picPreview.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1002, 712);
+            this.Controls.Add(this.panelProgressRing);
             this.Controls.Add(this.btnSaveNewImage);
             this.Controls.Add(this.btnOpenOriginal);
             this.Controls.Add(this.numRotateDegrees);
@@ -125,8 +151,10 @@
             this.Controls.Add(this.picPreview);
             this.Name = "MainForm";
             this.Text = "影像旋轉";
-            ((System.ComponentModel.ISupportInitialize)(this.picPreview)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRotateDegrees)).EndInit();
+            this.panelProgressRing.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picProgressRing)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picPreview)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -140,6 +168,8 @@
         private System.Windows.Forms.Button btnOpenOriginal;
         private System.Windows.Forms.Button btnSaveNewImage;
         private System.Windows.Forms.ToolTip toolTipRotateDegrees;
+        private System.Windows.Forms.Panel panelProgressRing;
+        private System.Windows.Forms.PictureBox picProgressRing;
     }
 }
 

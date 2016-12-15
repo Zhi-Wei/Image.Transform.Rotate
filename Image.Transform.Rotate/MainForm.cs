@@ -13,6 +13,14 @@ namespace Image.Transform.Rotate
         public MainForm()
         {
             InitializeComponent();
+            this.InitializeProgressRing();
+        }
+
+        private void InitializeProgressRing()
+        {
+            this.picPreview.SendToBack();
+            this.panelProgressRing.Parent = this.picPreview;
+            this.panelProgressRing.BringToFront();
         }
 
         private async void btnOpenOriginal_ClickAsync(object sender, EventArgs e)
