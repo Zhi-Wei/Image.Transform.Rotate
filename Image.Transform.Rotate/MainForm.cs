@@ -16,13 +16,6 @@ namespace Image.Transform.Rotate
             this.InitializeProgressRing();
         }
 
-        private void InitializeProgressRing()
-        {
-            this.picPreview.SendToBack();
-            this.panelProgressRing.Parent = this.picPreview;
-            this.panelProgressRing.BringToFront();
-        }
-
         private async void btnOpenOriginal_ClickAsync(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -38,9 +31,14 @@ namespace Image.Transform.Rotate
             {
                 try
                 {
+                    this.PreventUserOperation(true);
+
+                    picPreview.Image = null;
                     picPreview.Image = await this.ApplyFilterAsync(
                         await Task.Factory.StartNew(() =>
                             new Bitmap(openFileDialog.FileName)));
+
+                    this.PreventUserOperation(false);
                 }
                 catch (Exception)
                 {
@@ -72,7 +70,11 @@ namespace Image.Transform.Rotate
         {
             if (picPreview.Image != null)
             {
+                this.PreventUserOperation(true);
+
                 picPreview.Image = await this.ApplyFilterAsync(new Bitmap(picPreview.Image));
+
+                this.PreventUserOperation(false);
             }
         }
 
@@ -91,12 +93,17 @@ namespace Image.Transform.Rotate
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
+                    this.PreventUserOperation(true);
+
                     ImageFormat imgFormat = GetImageFormat(saveFileDialog);
                     using (Stream stream = saveFileDialog.OpenFile())
                     {
                         await Task.Factory.StartNew(() =>
                                    picPreview.Image.Save(stream, imgFormat));
                     }
+
+                    this.PreventUserOperation(false);
+
                     MessageBox.Show("儲存成功。",
                                     "訊息",
                                     MessageBoxButtons.OK,
@@ -120,5 +127,55 @@ namespace Image.Transform.Rotate
             }
             return imgFormat;
         }
+
+        private void picPreview_SizeChanged(object sender, EventArgs e)
+        {
+            if (this.panelProgressRing.Visible)
+            {
+                this.SetProgressRingLocation();
+            }
+        }
+
+        private void PreventUserOperation(bool isPrevented)
+        {
+            this.SwitchUserControls(isPrevented == false);
+            this.ShowProgressRing(isPrevented);
+        }
+
+        private void SwitchUserControls(bool isEnabled)
+        {
+            this.numRotateDegrees.Enabled = isEnabled;
+            this.btnOpenOriginal.Enabled = isEnabled;
+            this.btnSaveNewImage.Enabled = isEnabled;
+        }
+
+        #region ProgressRing
+
+        private void InitializeProgressRing()
+        {
+            this.picPreview.SendToBack();
+            this.panelProgressRing.Parent = this.picPreview;
+            this.panelProgressRing.BringToFront();
+        }
+
+        private void ShowProgressRing(bool isVisible)
+        {
+            if (isVisible)
+            {
+                this.SetProgressRingLocation();
+            }
+            this.panelProgressRing.Visible = isVisible;
+        }
+
+        private void SetProgressRingLocation()
+        {
+            int xOffset = (int)(this.picPreview.Width / 2.0) -
+                          (int)(this.panelProgressRing.Width / 2.0);
+            int yOffset = (int)(this.picPreview.Height / 2.0) -
+                          (int)(this.panelProgressRing.Height / 2.0);
+            this.panelProgressRing.Location = new Point(xOffset, yOffset);
+        }
+
+        #endregion ProgressRing
     }
 }

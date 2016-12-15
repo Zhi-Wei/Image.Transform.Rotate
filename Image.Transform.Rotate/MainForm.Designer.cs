@@ -109,6 +109,7 @@
             this.panelProgressRing.Name = "panelProgressRing";
             this.panelProgressRing.Size = new System.Drawing.Size(120, 120);
             this.panelProgressRing.TabIndex = 5;
+            this.panelProgressRing.Visible = false;
             // 
             // picProgressRing
             // 
@@ -137,6 +138,7 @@
             this.picPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picPreview.TabIndex = 0;
             this.picPreview.TabStop = false;
+            this.picPreview.SizeChanged += new System.EventHandler(this.picPreview_SizeChanged);
             // 
             // MainForm
             // 
