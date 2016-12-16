@@ -2,7 +2,6 @@
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -35,8 +34,8 @@ namespace Image.Transform.Rotate
 
                     picPreview.Image = null;
                     picPreview.Image = await this.ApplyFilterAsync(
-                        await Task.Factory.StartNew(() =>
-                            new Bitmap(openFileDialog.FileName)));
+                                            await Task.Factory.StartNew(() =>
+                                                new Bitmap(openFileDialog.FileName)));
 
                     this.PreventUserOperation(false);
                 }
@@ -72,7 +71,10 @@ namespace Image.Transform.Rotate
             {
                 this.PreventUserOperation(true);
 
-                picPreview.Image = await this.ApplyFilterAsync(new Bitmap(picPreview.Image));
+                using (Bitmap previewBitmap = new Bitmap(picPreview.Image))
+                {
+                    picPreview.Image = await this.ApplyFilterAsync(previewBitmap);
+                }
 
                 this.PreventUserOperation(false);
             }
@@ -96,10 +98,10 @@ namespace Image.Transform.Rotate
                     this.PreventUserOperation(true);
 
                     ImageFormat imgFormat = GetImageFormat(saveFileDialog);
-                    using (Stream stream = saveFileDialog.OpenFile())
+                    using (Bitmap previewBitmap = new Bitmap(picPreview.Image))
                     {
                         await Task.Factory.StartNew(() =>
-                                   picPreview.Image.Save(stream, imgFormat));
+                               previewBitmap.Save(saveFileDialog.FileName, imgFormat));
                     }
 
                     this.PreventUserOperation(false);
