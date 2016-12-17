@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commons\Enums\RotateTransformType.cs" />
+    <Compile Include="Commons\Helpers\EnumHelper.cs" />
     <Compile Include="Factories\ImageTransformStrategyFactory.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
