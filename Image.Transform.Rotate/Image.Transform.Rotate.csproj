@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commons\Enums\RotateTransformType.cs" />
+    <Compile Include="Factories\ImageTransformStrategyFactory.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
