@@ -1,4 +1,6 @@
-﻿using Image.Transform.Rotate.Services;
+﻿using Image.Transform.Rotate.Commons.Enums;
+using Image.Transform.Rotate.Commons.Helpers;
+using Image.Transform.Rotate.Factories;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -12,6 +14,7 @@ namespace Image.Transform.Rotate
         public MainForm()
         {
             InitializeComponent();
+            this.InitializeRotateTypeComboBox();
             this.InitializeProgressRing();
         }
 
@@ -51,9 +54,11 @@ namespace Image.Transform.Rotate
 
         private Task<Bitmap> ApplyFilterAsync(Bitmap originalBitmap)
         {
+            RotateTransformType rotateType =
+                (RotateTransformType)comboBoxRotateType.SelectedValue;
             Func<Bitmap> func = () =>
-                        new ImageTransformService()
-                            .RotateImage(originalBitmap, (double)numRotateDegrees.Value);
+                ImageTransformStrategyFactory.GetStrategy(rotateType)
+                    .RotateImage(originalBitmap, (double)numRotateDegrees.Value);
             if (originalBitmap == null)
             {
                 func = () => null;
@@ -179,5 +184,13 @@ namespace Image.Transform.Rotate
         }
 
         #endregion ProgressRing
+
+        private void InitializeRotateTypeComboBox()
+        {
+            comboBoxRotateType.ValueMember = "Key";
+            comboBoxRotateType.DisplayMember = "Value";
+            comboBoxRotateType.DataSource = new BindingSource(
+                EnumHelper.GetDisplayNameDictionary<RotateTransformType>(), null);
+        }
     }
 }
