@@ -37,6 +37,8 @@
             this.panelProgressRing = new System.Windows.Forms.Panel();
             this.picProgressRing = new System.Windows.Forms.PictureBox();
             this.picPreview = new System.Windows.Forms.PictureBox();
+            this.labelRotateType = new System.Windows.Forms.Label();
+            this.comboBoxRotateType = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numRotateDegrees)).BeginInit();
             this.panelProgressRing.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picProgressRing)).BeginInit();
@@ -51,7 +53,7 @@
             this.labelRotateDegrees.Location = new System.Drawing.Point(816, 10);
             this.labelRotateDegrees.Name = "labelRotateDegrees";
             this.labelRotateDegrees.Size = new System.Drawing.Size(177, 40);
-            this.labelRotateDegrees.TabIndex = 4;
+            this.labelRotateDegrees.TabIndex = 0;
             this.labelRotateDegrees.Text = "旋轉角度：";
             // 
             // numRotateDegrees
@@ -96,7 +98,7 @@
             this.btnSaveNewImage.Location = new System.Drawing.Point(823, 650);
             this.btnSaveNewImage.Name = "btnSaveNewImage";
             this.btnSaveNewImage.Size = new System.Drawing.Size(167, 50);
-            this.btnSaveNewImage.TabIndex = 3;
+            this.btnSaveNewImage.TabIndex = 4;
             this.btnSaveNewImage.Text = "儲存";
             this.btnSaveNewImage.UseVisualStyleBackColor = true;
             this.btnSaveNewImage.Click += new System.EventHandler(this.btnSaveNewImage_ClickAsync);
@@ -108,7 +110,7 @@
             this.panelProgressRing.Location = new System.Drawing.Point(340, 285);
             this.panelProgressRing.Name = "panelProgressRing";
             this.panelProgressRing.Size = new System.Drawing.Size(120, 120);
-            this.panelProgressRing.TabIndex = 5;
+            this.panelProgressRing.TabIndex = 0;
             this.panelProgressRing.Visible = false;
             // 
             // picProgressRing
@@ -140,11 +142,34 @@
             this.picPreview.TabStop = false;
             this.picPreview.SizeChanged += new System.EventHandler(this.picPreview_SizeChanged);
             // 
+            // labelRotateType
+            // 
+            this.labelRotateType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelRotateType.AutoSize = true;
+            this.labelRotateType.Font = new System.Drawing.Font("微軟正黑體", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.labelRotateType.Location = new System.Drawing.Point(816, 130);
+            this.labelRotateType.Name = "labelRotateType";
+            this.labelRotateType.Size = new System.Drawing.Size(177, 40);
+            this.labelRotateType.TabIndex = 0;
+            this.labelRotateType.Text = "旋轉方法：";
+            // 
+            // comboBoxRotateType
+            // 
+            this.comboBoxRotateType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxRotateType.Font = new System.Drawing.Font("微軟正黑體", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.comboBoxRotateType.FormattingEnabled = true;
+            this.comboBoxRotateType.Location = new System.Drawing.Point(823, 174);
+            this.comboBoxRotateType.Name = "comboBoxRotateType";
+            this.comboBoxRotateType.Size = new System.Drawing.Size(167, 48);
+            this.comboBoxRotateType.TabIndex = 3;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1002, 712);
+            this.Controls.Add(this.comboBoxRotateType);
+            this.Controls.Add(this.labelRotateType);
             this.Controls.Add(this.panelProgressRing);
             this.Controls.Add(this.btnSaveNewImage);
             this.Controls.Add(this.btnOpenOriginal);
@@ -172,6 +197,8 @@
         private System.Windows.Forms.ToolTip toolTipRotateDegrees;
         private System.Windows.Forms.Panel panelProgressRing;
         private System.Windows.Forms.PictureBox picProgressRing;
+        private System.Windows.Forms.Label labelRotateType;
+        private System.Windows.Forms.ComboBox comboBoxRotateType;
     }
 }
 
