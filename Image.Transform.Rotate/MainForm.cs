@@ -9,8 +9,15 @@ using System.Windows.Forms;
 
 namespace Image.Transform.Rotate
 {
+    /// <summary>
+    /// 主表單。
+    /// </summary>
+    /// <seealso cref="System.Windows.Forms.Form" />
     public partial class MainForm : Form
     {
+        /// <summary>
+        /// 初始化 <see cref="MainForm"/> 類別的新執行個體。
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
@@ -18,6 +25,11 @@ namespace Image.Transform.Rotate
             this.InitializeProgressRing();
         }
 
+        /// <summary>
+        /// 以非同步作業的方式，處理 [開啟] 原圖按鈕的 Click 事件。
+        /// </summary>
+        /// <param name="sender">事件的來源。</param>
+        /// <param name="e">這個 <see cref="EventArgs"/> 包含事件資料的實體。</param>
         private async void btnOpenOriginal_ClickAsync(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -52,6 +64,11 @@ namespace Image.Transform.Rotate
             }
         }
 
+        /// <summary>
+        /// 以非同步作業的方式，套用旋轉濾鏡。
+        /// </summary>
+        /// <param name="originalBitmap">原點陣圖。</param>
+        /// <returns>工作物件，表示非同步作業。</returns>
         private Task<Bitmap> ApplyFilterAsync(Bitmap originalBitmap)
         {
             RotateTransformType rotateType =
@@ -70,6 +87,11 @@ namespace Image.Transform.Rotate
             return Task.Factory.StartNew(func);
         }
 
+        /// <summary>
+        /// 以非同步作業的方式，處理旋轉角度 NumericUpDown 的 ValueChanged 事件。
+        /// </summary>
+        /// <param name="sender">事件的來源。</param>
+        /// <param name="e">這個 <see cref="EventArgs"/> 包含事件資料的實體。</param>
         private async void numRotateDegrees_ValueChangedAsync(object sender, EventArgs e)
         {
             if (picPreview.Image != null)
@@ -85,6 +107,11 @@ namespace Image.Transform.Rotate
             }
         }
 
+        /// <summary>
+        /// 以非同步作業的方式，處理 [儲存] 新圖按鈕的 Click 事件。
+        /// </summary>
+        /// <param name="sender">事件的來源。</param>
+        /// <param name="e">這個 <see cref="EventArgs"/> 包含事件資料的實體。</param>
         private async void btnSaveNewImage_ClickAsync(object sender, EventArgs e)
         {
             if (picPreview.Image != null)
@@ -119,9 +146,14 @@ namespace Image.Transform.Rotate
             }
         }
 
+        /// <summary>
+        /// 取得映像的檔案格式。
+        /// </summary>
+        /// <param name="saveFileDialog">儲存檔案的對話視窗。</param>
+        /// <returns>映像的檔案格式。</returns>
         private static ImageFormat GetImageFormat(SaveFileDialog saveFileDialog)
         {
-            ImageFormat imgFormat = ImageFormat.Png;
+            ImageFormat imgFormat;
             switch (saveFileDialog.FilterIndex)
             {
                 case 2:
@@ -131,10 +163,19 @@ namespace Image.Transform.Rotate
                 case 3:
                     imgFormat = ImageFormat.Bmp;
                     break;
+
+                default:
+                    imgFormat = ImageFormat.Png;
+                    break;
             }
             return imgFormat;
         }
 
+        /// <summary>
+        /// 處理圖片預覽區的 SizeChanged 事件。
+        /// </summary>
+        /// <param name="sender">事件的來源。</param>
+        /// <param name="e">這個 <see cref="EventArgs"/> 包含事件資料的實體。</param>
         private void picPreview_SizeChanged(object sender, EventArgs e)
         {
             if (this.panelProgressRing.Visible)
@@ -143,12 +184,20 @@ namespace Image.Transform.Rotate
             }
         }
 
+        /// <summary>
+        /// 預防使用者操作。
+        /// </summary>
+        /// <param name="isPrevented">是否預防使用者操作，是則傳入 <c>true</c>，否則傳入 <c>false</c>。</param>
         private void PreventUserOperation(bool isPrevented)
         {
             this.SwitchUserControls(isPrevented == false);
             this.ShowProgressRing(isPrevented);
         }
 
+        /// <summary>
+        /// 切換使用者控制項。
+        /// </summary>
+        /// <param name="isEnabled">是否啟用使用者控制項，是則傳入 <c>true</c>，否則傳入 <c>false</c>。</param>
         private void SwitchUserControls(bool isEnabled)
         {
             this.numRotateDegrees.Enabled = isEnabled;
@@ -158,6 +207,9 @@ namespace Image.Transform.Rotate
 
         #region ProgressRing
 
+        /// <summary>
+        /// 初始化 Progress Ring。
+        /// </summary>
         private void InitializeProgressRing()
         {
             this.picPreview.SendToBack();
@@ -165,6 +217,10 @@ namespace Image.Transform.Rotate
             this.panelProgressRing.BringToFront();
         }
 
+        /// <summary>
+        /// 顯示 Progress Ring。
+        /// </summary>
+        /// <param name="isVisible">是否顯示 Progress Ring，是則傳入 <c>true</c>，否則傳入 <c>false</c>。</param>
         private void ShowProgressRing(bool isVisible)
         {
             if (isVisible)
@@ -174,6 +230,9 @@ namespace Image.Transform.Rotate
             this.panelProgressRing.Visible = isVisible;
         }
 
+        /// <summary>
+        /// 設定 Progress Ring 的位置。
+        /// </summary>
         private void SetProgressRingLocation()
         {
             int xOffset = (int)(this.picPreview.Width / 2.0) -
@@ -185,6 +244,9 @@ namespace Image.Transform.Rotate
 
         #endregion ProgressRing
 
+        /// <summary>
+        /// 初始化旋轉類型的 ComboBox。
+        /// </summary>
         private void InitializeRotateTypeComboBox()
         {
             comboBoxRotateType.ValueMember = "Key";
