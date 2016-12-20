@@ -52,7 +52,7 @@ namespace Image.Transform.Rotate.Services
 
             Rectangle imageBounds = new Rectangle(0, 0,
                                     sourceBitmap.Width,
-                                   sourceBitmap.Height);
+                                    sourceBitmap.Height);
 
             for (int row = 0; row < sourceBitmap.Height; row++)
             {
@@ -112,7 +112,7 @@ namespace Image.Transform.Rotate.Services
         /// <param name="degrees">旋轉角度。</param>
         /// <param name="offsetX">中心點的 X 座標偏移量。</param>
         /// <param name="offsetY">中心點的 Y 座標偏移量。</param>
-        /// <returns></returns>
+        /// <returns>旋轉後的座標點。</returns>
         private Point RotateXY(Point source, double degrees, int offsetX, int offsetY)
         {
             return new Point
