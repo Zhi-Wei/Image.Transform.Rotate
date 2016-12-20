@@ -16,11 +16,15 @@ namespace Image.Transform.Rotate.Factories
         /// <returns>影像轉換服務實體。</returns>
         public static IImageTransformService GetStrategy(RotateTransformType type)
         {
-            IImageTransformService service = new ImageTransformService();
+            IImageTransformService service;
             switch (type)
             {
                 case RotateTransformType.GdiPlus:
                     service = new GdiPlusTransformService();
+                    break;
+
+                default:
+                    service = new ImageTransformService();
                     break;
             }
             return service;
