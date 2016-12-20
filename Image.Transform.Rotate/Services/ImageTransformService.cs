@@ -9,6 +9,7 @@ namespace Image.Transform.Rotate.Services
     /// <summary>
     /// 影像轉換服務。
     /// </summary>
+    /// <seealso cref="Image.Transform.Rotate.Services.Interfaces.IImageTransformService" />
     public class ImageTransformService : IImageTransformService
     {
         /// <summary>
