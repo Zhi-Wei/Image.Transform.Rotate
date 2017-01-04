@@ -16,6 +16,11 @@ namespace Image.Transform.Rotate
     public partial class MainForm : Form
     {
         /// <summary>
+        /// 上次圖片旋轉的角度。
+        /// </summary>
+        private decimal _previousRotateDegrees;
+
+        /// <summary>
         /// 初始化 <see cref="MainForm"/> 類別的新執行個體。
         /// </summary>
         public MainForm()
@@ -23,6 +28,7 @@ namespace Image.Transform.Rotate
             InitializeComponent();
             this.InitializeRotateTypeComboBox();
             this.InitializeProgressRing();
+            this._previousRotateDegrees = numRotateDegrees.Value;
         }
 
         /// <summary>
@@ -71,6 +77,7 @@ namespace Image.Transform.Rotate
         /// <returns>工作物件，表示非同步作業。</returns>
         private Task<Bitmap> ApplyFilterAsync(Bitmap originalBitmap)
         {
+            this._previousRotateDegrees = numRotateDegrees.Value;
             RotateTransformType rotateType =
                 (RotateTransformType)comboBoxRotateType.SelectedValue;
             Func<Bitmap> func = () =>
@@ -95,6 +102,27 @@ namespace Image.Transform.Rotate
         private async void numRotateDegrees_ValueChangedAsync(object sender, EventArgs e)
         {
             if (picPreview.Image != null)
+            {
+                this.PreventUserOperation(true);
+
+                using (Bitmap previewBitmap = new Bitmap(picPreview.Image))
+                {
+                    picPreview.Image = await this.ApplyFilterAsync(previewBitmap);
+                }
+
+                this.PreventUserOperation(false);
+            }
+        }
+
+        /// <summary>
+        /// 以非同步作業的方式，處理旋轉方法下拉式選單的 SelectedIndexChanged 事件。
+        /// </summary>
+        /// <param name="sender">事件的來源。</param>
+        /// <param name="e">這個 <see cref="EventArgs"/> 包含事件資料的實體。</param>
+        private async void comboBoxRotateType_SelectedIndexChangedAsync(object sender, EventArgs e)
+        {
+            if (picPreview.Image != null &&
+                this._previousRotateDegrees != numRotateDegrees.Value)
             {
                 this.PreventUserOperation(true);
 

@@ -163,6 +163,7 @@
             this.comboBoxRotateType.Name = "comboBoxRotateType";
             this.comboBoxRotateType.Size = new System.Drawing.Size(167, 48);
             this.comboBoxRotateType.TabIndex = 3;
+            this.comboBoxRotateType.SelectedIndexChanged += new System.EventHandler(this.comboBoxRotateType_SelectedIndexChangedAsync);
             // 
             // MainForm
             // 
