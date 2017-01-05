@@ -18,6 +18,10 @@ namespace Image.Transform.Rotate.Services
         /// <param name="sourceBitmap">要旋轉的影像。</param>
         /// <param name="degrees">旋轉角度，–360 至 360 度。</param>
         /// <returns>旋轉後的影像。</returns>
+        /// <remarks>
+        /// 參考：C# How to: Image Transform Rotate | Software by Default - Dewald Esterhuizen
+        /// URL：https://softwarebydefault.com/2013/06/16/image-transform-rotate/
+        /// </remarks>
         public Bitmap RotateImage(Bitmap sourceBitmap, double degrees)
         {
             BitmapData sourceData =
@@ -114,6 +118,10 @@ namespace Image.Transform.Rotate.Services
         /// <param name="offsetX">中心點的 X 座標偏移量。</param>
         /// <param name="offsetY">中心點的 Y 座標偏移量。</param>
         /// <returns>旋轉後的座標點。</returns>
+        /// <remarks>
+        /// 參考：C# How to: Image Transform Rotate | Software by Default - Dewald Esterhuizen
+        /// URL：https://softwarebydefault.com/2013/06/16/image-transform-rotate/
+        /// </remarks>
         private Point RotateXY(Point source, double degrees, int offsetX, int offsetY)
         {
             return new Point
